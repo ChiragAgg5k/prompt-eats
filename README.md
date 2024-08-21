@@ -6,6 +6,7 @@ This project is a recipe recommendation application that uses Fluvio, Spoonacula
 
 ### **Table of Contents**
 
+-   [Demo](#demo)
 -   [Installation](#installation)
 -   [Usage](#usage)
 -   [Features](#features)
@@ -18,6 +19,10 @@ This project is a recipe recommendation application that uses Fluvio, Spoonacula
 -   [License](#license)
 
 ---
+
+## **Demo
+
+https://github.com/user-attachments/assets/4b9b2f5d-bdf5-4fbd-8758-bcf9f42b0186
 
 ### **Installation**
 

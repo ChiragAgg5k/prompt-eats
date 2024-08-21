@@ -10,6 +10,8 @@ const API_KEY = dotenv.config().parsed?.SPOONACULAR_API_KEY;
 const FLUVIO_TOPIC = "recipe-stream";
 
 const app = express();
+const port = process.env.PORT || 8000;
+
 app.use(express.json());
 app.use(cors());
 
@@ -110,6 +112,7 @@ wss.on("connection", (ws: any) => {
 
 			const consumer = await fluvio.partitionConsumer("recipe-stream", 0);
 
+			// to discard old searches, we set offset from end
 			await consumer.stream(Offset.FromEnd(), (record: any) => {
 				const value = record.valueString();
 				ws.send(value);
@@ -122,7 +125,7 @@ wss.on("connection", (ws: any) => {
 	streamRecipes();
 });
 
-server.listen(8000, () => {
+server.listen(port, () => {
 	console.log("Server running on port 8000");
 });
 

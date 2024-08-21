@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
 import { AlarmClockIcon } from "@/components/icons/index";
-import { FaGithub } from "react-icons/fa";
 import SearchInput from "@/components/search-input";
 
 const popularCategories = [
@@ -35,9 +34,14 @@ const popularCategories = [
 export default async function Home() {
 	let recipes = [];
 	try {
-		recipes = (await fetch("http://localhost:8000/trending", {
-			cache: "no-cache"
-		}).then((res) => res.json())) as any[];
+		recipes = (await fetch(
+			`
+			${process.env.NODE_ENV === "development" ? "http://" : "https://"}
+			${process.env.NEXT_PUBLIC_BACKEND_URL}/trending`,
+			{
+				cache: "no-cache"
+			}
+		).then((res) => res.json())) as any[];
 	} catch (error) {
 		console.error(error);
 	}

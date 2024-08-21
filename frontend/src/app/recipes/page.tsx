@@ -14,11 +14,17 @@ export default function RecipesPage() {
 	const searchParams = useSearchParams();
 	const query = searchParams.get("query");
 
+	const [searchQuery, setSearchQuery] = useState(query || "");
+	const [inputValue, setInputValue] = useState(query || "");
 	const [recipes, setRecipes] = useState<Recipe[] | { error: string }>([]);
 
 	useEffect(() => {
 		try {
-			fetch(`http://localhost:8000/search?query=${query}`)
+			fetch(
+				`${process.env.NODE_ENV === "development" ? "http" : "https"}://${
+					process.env.NEXT_PUBLIC_BACKEND_URL
+				}/search?query=${searchQuery}`
+			)
 				.then((res) => res.json())
 				.then((data: Recipe[]) => {
 					setRecipes(data);
@@ -26,14 +32,20 @@ export default function RecipesPage() {
 		} catch (error) {
 			console.error(error);
 		}
-	}, [query]);
+	}, [searchQuery]);
 
 	return (
 		<main>
 			<div className="p-8">
-				<div className="relative w-full">
+				<form
+					className="relative w-full"
+					onSubmit={(e) => {
+						e.preventDefault();
+						setSearchQuery(inputValue);
+					}}>
 					<Input
-						value={query || ""}
+						value={inputValue}
+						onChange={(e) => setInputValue(e.target.value)}
 						type="text"
 						placeholder="What would you like to eat?"
 						className="w-full rounded-full bg-primary-foreground/10 px-4 py-2 pr-12 text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary-foreground focus:ring-offset-2"
@@ -45,7 +57,7 @@ export default function RecipesPage() {
 						className="absolute right-2 top-1/2 -translate-y-1/2">
 						<SearchIcon className="w-5 h-5 text-primary-foreground" />
 					</Button>
-				</div>
+				</form>
 			</div>
 			<div className="grid px-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 				{Object.prototype.hasOwnProperty.call(recipes, "error") && (

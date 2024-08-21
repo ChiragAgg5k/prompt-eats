@@ -18,7 +18,9 @@ export default function RecipesPage() {
 	const [recipes, setRecipes] = useState<Recipe[]>([]);
 
 	useEffect(() => {
-		const ws = new WebSocket("ws://localhost:8000");
+		const ws = new WebSocket(
+			`${process.env.NODE_ENV === "development" ? "ws" : "wss"}://${process.env.NEXT_PUBLIC_BACKEND_URL}`
+		);
 
 		ws.onmessage = (event) => {
 			const recipe: Recipe = JSON.parse(event.data);

@@ -4,8 +4,9 @@ import express, { Request, Response } from "express";
 import { WebSocketServer } from "ws";
 import http from "http";
 import cors from "cors";
+import dotenv from "dotenv";
 
-const API_KEY = "5edaa254f9b942e38ffefd0e95ded630";
+const API_KEY = dotenv.config().parsed?.SPOONACULAR_API_KEY;
 const FLUVIO_TOPIC = "recipe-stream";
 
 const app = express();

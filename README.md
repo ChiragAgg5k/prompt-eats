@@ -24,6 +24,8 @@ This project is a recipe recommendation application that uses Fluvio, Spoonacula
 
 https://github.com/user-attachments/assets/4b9b2f5d-bdf5-4fbd-8758-bcf9f42b0186
 
+![SDF Flow](./assets/sdf_flow.png)
+
 ### **Installation**
 
 To get started with this project, follow the steps below:
